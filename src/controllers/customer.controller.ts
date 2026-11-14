@@ -15,9 +15,10 @@ export const customerController = {
     } catch (err) { next(err); }
   },
 
-  async create(req: Request, res: Response, next: NextFunction) {
+    async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const data = createCustomerSchema.parse(req.body);
+      const parsed = createCustomerSchema.parse(req.body);
+      const data = { ...parsed, phone: parsed.phone ?? null };
       res.status(201).json(await customerService.create(data));
     } catch (err) { next(err); }
   },
